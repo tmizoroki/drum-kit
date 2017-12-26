@@ -1,8 +1,10 @@
 import audioConfig from './audioConfig.js';
 
 const keyCodeToAudio = getKeyCodeToAudio();
+const keys = document.querySelectorAll('.key');
 
 window.addEventListener('keydown', handleKeydown);
+keys.forEach(key => key.addEventListener('transitionend', handleTransitionend));
 
 function getKeyCodeToAudio() {
   return audioConfig.reduce((keyCodeToAudio, config) => {
@@ -13,6 +15,7 @@ function getKeyCodeToAudio() {
 
 function handleKeydown(event) {
   playSound(event.keyCode);
+  addTransitionStyles(event.keyCode);
 }
 
 function playSound(keyCode) {
@@ -22,4 +25,19 @@ function playSound(keyCode) {
   }
   audio.currentTime = 0;
   audio.play();
+}
+
+function addTransitionStyles(keyCode) {
+  const key = document.querySelector(`.key[data-key="${event.keyCode}"]`);
+  if (key == null) {
+    return;
+  }
+  key.classList.add('playing');
+}
+
+function handleTransitionend(event) {
+  if (event.propertyName !== 'transform') {
+    return;
+  }
+  this.classList.remove('playing');
 }
