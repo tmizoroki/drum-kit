@@ -4,7 +4,10 @@ const keyCodeToAudio = getKeyCodeToAudio();
 const keys = document.querySelectorAll('.key');
 
 window.addEventListener('keydown', handleKeydown);
-keys.forEach(key => key.addEventListener('transitionend', handleTransitionend));
+keys.forEach(key => {
+  key.addEventListener('mousedown', handleMousedown);
+  key.addEventListener('transitionend', handleTransitionend);
+});
 
 function getKeyCodeToAudio() {
   return audioConfig.reduce((keyCodeToAudio, config) => {
@@ -16,6 +19,12 @@ function getKeyCodeToAudio() {
 function handleKeydown(event) {
   playSound(event.keyCode);
   addTransitionStyles(event.keyCode);
+}
+
+function handleMousedown(event) {
+  const keyCode = +event.currentTarget.dataset.key;
+  playSound(keyCode);
+  addTransitionStyles(keyCode);
 }
 
 function playSound(keyCode) {
