@@ -28,7 +28,7 @@ function playSound(keyCode) {
 }
 
 function addTransitionStyles(keyCode) {
-  const key = document.querySelector(`.key[data-key="${event.keyCode}"]`);
+  const key = document.querySelector(`.key[data-key="${keyCode}"]`);
   if (key == null) {
     return;
   }
