@@ -17,7 +17,7 @@ html {
 
 .key {
   transition: all 0.07s ease;
-  border: 0.4rem solid black;
+  border: 0.4rem solid #393e41;
   border-radius: 0.5rem;
   margin: 1rem;
   font-size: 1.5rem;
@@ -25,25 +25,25 @@ html {
   width: 10rem;
   text-align: center;
   background: rgba(0, 0, 0, 0.4);
-  color: white;
-  text-shadow: 0 0 0.5rem black;
+  color: #fafdf6;
+  text-shadow: 0 0 0.5rem #393e41;
   user-select: none;
 }
 
 .key:hover {
-  border-color: #ff8800;
-  box-shadow: 0 0 1rem #ff8800;
+  border-color: #e94f37;
+  box-shadow: 0 0 1rem #e94f37;
 }
 
 .playing {
   transform: scale(1.1);
-  border-color: #ff8800;
-  box-shadow: 0 0 1rem #ff8800;
+  border-color: #e94f37;
+  box-shadow: 0 0 1rem #e94f37;
 }
 
 .playing > kbd {
-  color: #ff8800;
-  text-shadow: 0 0 1rem #ff8800;
+  color: #e94f37;
+  text-shadow: 0 0 1rem #e94f37;
 }
 
 kbd {
@@ -55,5 +55,5 @@ kbd {
   font-size: 1.2rem;
   letter-spacing: 0.1rem;
   text-transform: uppercase;
-  color: #ff8800;
+  color: #e94f37;
 }
