@@ -17,30 +17,28 @@ function getKeyCodeToAudio() {
 }
 
 function handleKeydown(event) {
-  playSound(event.keyCode);
-  addTransitionStyles(event.keyCode);
+  if (isValidKeyCode(event.keyCode)) {
+    playSound(event.keyCode);
+    addTransitionStyles(event.keyCode);
+  }
 }
 
 function handleMousedown(event) {
   const keyCode = +event.currentTarget.dataset.key;
-  playSound(keyCode);
-  addTransitionStyles(keyCode);
+  if (isValidKeyCode(keyCode)) {
+    playSound(keyCode);
+    addTransitionStyles(keyCode);
+  }
 }
 
 function playSound(keyCode) {
   const audio = keyCodeToAudio[keyCode];
-  if (audio == null) {
-    return;
-  }
   audio.currentTime = 0;
   audio.play();
 }
 
 function addTransitionStyles(keyCode) {
   const key = document.querySelector(`.key[data-key="${keyCode}"]`);
-  if (key == null) {
-    return;
-  }
   key.classList.add('playing');
 }
 
@@ -49,4 +47,8 @@ function handleTransitionend(event) {
     return;
   }
   this.classList.remove('playing');
+}
+
+function isValidKeyCode(keyCode) {
+  return keyCodeToAudio[keyCode] != null;
 }
