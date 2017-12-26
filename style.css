@@ -27,6 +27,12 @@ html {
   background: rgba(0, 0, 0, 0.4);
   color: white;
   text-shadow: 0 0 0.5rem black;
+  user-select: none;
+}
+
+.key:hover {
+  border-color: #ff8800;
+  box-shadow: 0 0 1rem #ff8800;
 }
 
 .playing {
