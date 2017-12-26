@@ -12,6 +12,14 @@ function getKeyCodeToAudio() {
 }
 
 function handleKeydown(event) {
-  const keyCode = event.keyCode;
-  console.log(keyCode);
+  playSound(event.keyCode);
+}
+
+function playSound(keyCode) {
+  const audio = keyCodeToAudio[keyCode];
+  if (audio == null) {
+    return;
+  }
+  audio.currentTime = 0;
+  audio.play();
 }
