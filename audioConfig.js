@@ -10,4 +10,13 @@ const audioConfig = [
   { keyCode: 76, src: 'assets/sounds/tink.wav' } // l
 ];
 
-export default audioConfig;
+const keyCodeToAudio = getKeyCodeToAudio();
+
+function getKeyCodeToAudio() {
+  return audioConfig.reduce((keyCodeToAudio, config) => {
+    keyCodeToAudio[config.keyCode] = new Audio(config.src);
+    return keyCodeToAudio;
+  }, {});
+}
+
+export default keyCodeToAudio;

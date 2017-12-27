@@ -1,45 +1,24 @@
-import audioConfig from './audioConfig.js';
+import keyCodeToAudio from './audioConfig.js';
 
-const keyCodeToAudio = getKeyCodeToAudio();
-const keys = document.querySelectorAll('.key');
+initializeEventListeners();
 
-window.addEventListener('keydown', handleKeydown);
-keys.forEach(key => {
-  key.addEventListener('mousedown', handleMousedown);
-  key.addEventListener('transitionend', handleTransitionend);
-});
+function initializeEventListeners() {
+  window.addEventListener('keydown', handlePlayEvent);
 
-function getKeyCodeToAudio() {
-  return audioConfig.reduce((keyCodeToAudio, config) => {
-    keyCodeToAudio[config.keyCode] = new Audio(config.src);
-    return keyCodeToAudio;
-  }, {});
+  const keys = document.querySelectorAll('.key');
+  keys.forEach(key => {
+    key.addEventListener('mousedown', handlePlayEvent);
+    key.addEventListener('transitionend', handleTransitionend);
+  });
 }
 
-function handleKeydown(event) {
-  if (isValidKeyCode(event.keyCode)) {
-    playSound(event.keyCode);
-    addTransitionStyles(event.keyCode);
+function handlePlayEvent(event) {
+  const keyCode = getKeyCodeFromEvent(event);
+  if (keyCodeToAudio[keyCode] == null) {
+    return;
   }
-}
-
-function handleMousedown(event) {
-  const keyCode = +event.currentTarget.dataset.key;
-  if (isValidKeyCode(keyCode)) {
-    playSound(keyCode);
-    addTransitionStyles(keyCode);
-  }
-}
-
-function playSound(keyCode) {
-  const audio = keyCodeToAudio[keyCode];
-  audio.currentTime = 0;
-  audio.play();
-}
-
-function addTransitionStyles(keyCode) {
-  const key = document.querySelector(`.key[data-key="${keyCode}"]`);
-  key.classList.add('playing');
+  playSound(keyCode);
+  addPlayingClass(keyCode);
 }
 
 function handleTransitionend(event) {
@@ -49,6 +28,22 @@ function handleTransitionend(event) {
   this.classList.remove('playing');
 }
 
-function isValidKeyCode(keyCode) {
-  return keyCodeToAudio[keyCode] != null;
+function getKeyCodeFromEvent(event) {
+  switch (event.type) {
+    case 'keydown':
+      return event.keyCode;
+    case 'mousedown':
+      return +event.currentTarget.dataset.key;
+  }
+}
+
+function playSound(keyCode) {
+  const audio = keyCodeToAudio[keyCode];
+  audio.currentTime = 0;
+  audio.play();
+}
+
+function addPlayingClass(keyCode) {
+  const key = document.querySelector(`.key[data-key="${keyCode}"]`);
+  key.classList.add('playing');
 }
